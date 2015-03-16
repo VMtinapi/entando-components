@@ -108,7 +108,8 @@
 			href="<s:url action="send" />">
 			<span class="icon fa fa-arrow-right"></span>&#32;
 			<s:text name="jpnewsletter.label.sendNow" />
-		</a>
+                </a>
+       
 	</p>
 </s:if>
 	</s:form>
@@ -116,4 +117,7 @@
 	<s:else>
 	<p><s:text name="jpnewsletter.label.newsletterQueue.empty" /></p>
 	</s:else>
+        
+        
+
 </div>

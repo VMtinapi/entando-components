@@ -26,11 +26,14 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterConfig;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterContentReportVO;
+import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterReport;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterSearchBean;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Subscriber;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author E.Santoboni, A.Turrini
@@ -67,6 +70,8 @@ public interface INewsletterManager {
 	public Subscriber loadSubscriber(String mailAddress) throws ApsSystemException;
 	
 	public void addSubscriber(String mailAddress) throws ApsSystemException;
+        
+        public void addSubscribers(String mailAddress, Boolean active) throws ApsSystemException;
 	
 	public void resetSubscriber(String mailAddress) throws ApsSystemException;
 	
@@ -79,5 +84,16 @@ public interface INewsletterManager {
 	public void cleanOldSubscribers() throws ApsSystemException;
 	
 	public Boolean isAlreadyAnUser(String mailAddress) throws ApsSystemException;
-	
+        
+        public List<String> getNewsletterId() throws ApsSystemException;
+     
+	public Integer getMail(Integer id) throws ApsSystemException;
+        
+        public List<String> getMailAddress(Integer id) throws ApsSystemException;
+        
+        public Date getDate(Integer id) throws ApsSystemException;
+        
+        public String getSubject(Integer id) throws ApsSystemException;
+        
+        public NewsletterReport getNewsletterReport(Integer newsletterid) throws ApsSystemException;
 }

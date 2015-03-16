@@ -23,33 +23,14 @@ package com.agiletec.plugins.jpnewsletter;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import com.agiletec.plugins.jpnewsletter.aps.internalservlet.subscriber.TestRegSubscriberAction;
-import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.TestNewsletterDAO;
-import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.TestNewsletterManager;
-import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.parse.TestNewsletterConfigDOM;
-import com.agiletec.plugins.jpnewsletter.apsadmin.newsletter.TestNewsletterAction;
-import com.agiletec.plugins.jpnewsletter.apsadmin.newsletter.TestNewsletterFinderAction;
-import com.agiletec.plugins.jpnewsletter.apsadmin.newsletter.queue.TestNewsletterQueueAction;
 import com.agiletec.plugins.jpnewsletter.apsadmin.subscriber.TestSubscribersAction;
-import com.agiletec.plugins.jpnewsletter.apsadmin.subscriber.TestSubscribersFinderAction;
 
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for Entando Plugin Newsletter");
-		
-		suite.addTestSuite(TestNewsletterConfigDOM.class);
-		suite.addTestSuite(TestNewsletterDAO.class);
-		suite.addTestSuite(TestNewsletterManager.class);
-		
-		suite.addTestSuite(TestNewsletterFinderAction.class);
-		suite.addTestSuite(TestNewsletterAction.class);
-		suite.addTestSuite(TestNewsletterQueueAction.class);
-		
-		suite.addTestSuite(TestRegSubscriberAction.class);
+		TestSuite suite = new TestSuite("Test for jAPS Plugin Newsletter");
 		
 		suite.addTestSuite(TestSubscribersAction.class);
-		suite.addTestSuite(TestSubscribersFinderAction.class);
 		
 		return suite;
 	}

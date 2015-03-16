@@ -33,7 +33,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -41,6 +40,7 @@ import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Co
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterContentReportVO;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterReport;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Subscriber;
+import java.util.Map.Entry;
 
 /**
  * @author E.Mezzano
@@ -106,7 +106,184 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 		}
 		return queue;
 	}
-	
+        
+        @Override
+        public List<String> loadNewsletterId()
+        {   
+            List<String> listNewsletterId = new ArrayList<String>();
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet res = null;
+		try {
+			conn = this.getConnection();
+			stat = conn.createStatement();
+			res = stat.executeQuery(LOAD_NEWSLETTER_ID);
+			while (res.next()) {
+				listNewsletterId.add(res.getString(1));
+			}
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error loading newsletter id", "loadNewsletterId");
+		} finally {
+			closeDaoResources(res, stat, conn);
+		}
+		return listNewsletterId;
+        }
+        
+        
+        @Override
+        public Integer loadMail(Integer newsletterid)
+        {   
+                int count = 0;
+                Connection conn = null;
+                PreparedStatement stat = null;
+		ResultSet res = null;
+                
+		try {
+			conn = this.getConnection();
+			stat = conn.prepareStatement(LOAD_MAIL_RECIPIENT);
+                        stat.setInt(1, newsletterid);
+			res = stat.executeQuery();
+			while (res.next()) {
+				count = res.getInt(1);
+			}
+			
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error loading mail", "loadMail");
+		} finally {
+				closeDaoResources(res, stat, conn);
+			}
+		return count;
+                
+        }
+        
+        @Override
+        public List<String> loadMailAddress(Integer newsletterid)
+        {   
+                List<String> listMailAddress = new ArrayList<String>();
+                Connection conn = null;
+                PreparedStatement stat = null;
+		ResultSet res = null;
+                
+		try {
+			conn = this.getConnection();
+			stat = conn.prepareStatement(LOAD_MAILADDRESS_RECIPIENT);
+                        stat.setInt(1, newsletterid);
+			res = stat.executeQuery();
+			while (res.next()) {
+                                
+                                listMailAddress.add(res.getString(1));
+			}
+			
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error loading mailAddress", "loadMailAddress");
+		} finally {
+				closeDaoResources(res, stat, conn);
+			}
+		return listMailAddress;
+                
+        }
+        
+        
+        @Override
+        public Date loadDate(Integer newsletterid)
+        {   
+                Date date = null;
+                Connection conn = null;
+                PreparedStatement stat = null;
+		ResultSet res = null;
+                
+		try {
+			conn = this.getConnection();
+			stat = conn.prepareStatement(LOAD_NEWSLETTER_DATE);
+                        stat.setInt(1, newsletterid);
+			res = stat.executeQuery();
+			while (res.next()) {
+				date = res.getDate(1);
+			}
+			
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error loading mail", "loadMail");
+		} finally {
+				closeDaoResources(res, stat, conn);
+			}
+		return date;
+                
+        }
+        
+        @Override
+        public String loadSubject(Integer newsletterid)
+        {   
+                String subject = null;
+                Connection conn = null;
+                PreparedStatement stat = null;
+		ResultSet res = null;
+                
+		try {
+			conn = this.getConnection();
+			stat = conn.prepareStatement(LOAD_NEWSLETTER_SUBJECT);
+                        stat.setInt(1, newsletterid);
+			res = stat.executeQuery();
+			while (res.next()) {
+				subject = res.getString(1);
+			}
+			
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error loading mail", "loadMail");
+		} finally {
+				closeDaoResources(res, stat, conn);
+			}
+		return subject;
+                
+        }
+        
+        
+        @Override
+	public NewsletterReport loadNewsletterReport(Integer newsletterid) {
+                NewsletterReport report = null;
+		Connection conn = null;
+		PreparedStatement stat = null;
+		ResultSet res = null;
+		try {
+			conn = this.getConnection();
+			stat = conn.prepareStatement(LOAD_NEWSLETTER_REPORT);
+			stat.setInt(1, newsletterid);
+			res = stat.executeQuery();
+			if (res.next()) {
+				report= this.createNewsletterReportFromResult(res);
+				
+				
+			}
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error cleaning content queue", "loadNewsletterReport");
+		} finally {
+			closeDaoResources(res, stat, conn);
+		}
+		return report;
+	}
+        
+      
+       
+	public NewsletterReport createNewsletterReportFromResult(ResultSet res) throws SQLException  {
+		NewsletterReport reportNewsletter = new NewsletterReport();
+		reportNewsletter = new NewsletterReport();
+                reportNewsletter.setId(res.getInt(1));
+                reportNewsletter.setSendDate(res.getDate(2));
+                reportNewsletter.setSubject(res.getString(3));
+				
+		
+		return reportNewsletter;
+	}
+        
+        
+        
+
+        
 	@Override
 	public void cleanContentQueue(List<String> queue) {
 		Connection conn = null;
@@ -271,6 +448,13 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 					stat.setString(3, recipient.getValue());
 					stat.addBatch();
 					stat.clearParameters();
+                                        }
+                                for (String recipient : contentReport.getFreeRecipients()) {
+					stat.setInt(1, id);
+					stat.setString(2, null);
+					stat.setString(3, recipient);
+					stat.addBatch();
+					stat.clearParameters();
 				}
 			}
 			stat.executeBatch();
@@ -283,6 +467,8 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 			closeDaoResources(null, stat);
 		}
 	}
+        
+        
 	
 	private NewsletterContentReportVO getContentReport(String contentId, Connection conn) {
 		NewsletterContentReportVO contentReport = null;
@@ -302,6 +488,10 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 		}
 		return contentReport;
 	}
+        
+        
+        
+        
 	
 	private Map<String, String> getContentRecipients(int contentReportId, Connection conn) {
 
@@ -370,39 +560,23 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 	@Override
 
 	public List<Subscriber> loadSubscribers() throws ApsSystemException {
-
 		List<Subscriber> subscribers = new ArrayList<Subscriber>();
-
 		Connection conn = null;
-
 		PreparedStatement stat = null;
-
 		ResultSet res = null;
-
 		try {
-
 			conn = this.getConnection();
-
 			stat = conn.prepareStatement(LOAD_SUBSCRIBERS);
-
 			res = stat.executeQuery();
-
 			while(res.next()){
-
 				Subscriber subscriber = this.loadSubscriberFromResulSet(res);
-
 				subscribers.add(subscriber);
-
 			}
 
 		} catch (Throwable t) {
-
 			this.processDaoException(t, "Errore durante il caricamento della lista degli indirizzi e-mail", "loadSubscribers");
-
 		} finally {
-
 			this.closeDaoResources(res,stat,conn);
-
 		}
 
 		return subscribers;
@@ -602,61 +776,35 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 	
 
 	private Subscriber loadSubscriberFromResulSet(ResultSet res) throws SQLException {
-
 		Subscriber subscriber = new Subscriber();
-
 		String mailAddress = res.getString("mailaddress");
-
 		Date subscriptionDate = res.getDate("subscription_date");
-
 		subscriber.setMailAddress(mailAddress);
-
 		subscriber.setSubscriptionDate(subscriptionDate);
-
 		int active = res.getInt("active");
-
 		subscriber.setActive(active==1);
-
 		return subscriber;
-
 	}
 
 	
 
 	@Override
-
 	public void addSubscriber(Subscriber subscriber, String token) throws ApsSystemException {
-
 		Connection conn = null;
-
 		try {
-
 			conn = this.getConnection();
-
 			conn.setAutoCommit(false);
-
 			this.addSubscriber(subscriber, conn);
-
 			if (token!=null) {
-
 				this.removeTokenByAddress(subscriber.getMailAddress(), conn);
-
 				this.addToken(subscriber, token, conn);
-
 			}
-
 			conn.commit();
-
 		}  catch (Throwable t) {
-
 			this.executeRollback(conn);
-
 			this.processDaoException(t, "Errore durante l'aggiunta di una sottoscrizione", "addSubscriber");
-
 		} finally {
-
 			this.closeConnection(conn);
-
 		}
 
 	}
@@ -834,12 +982,20 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 	private final String DELETE_CONTENT_FROM_QUEUE = "DELETE FROM jpnewsletter_contentqueue WHERE contentid = ? ";
 	
 	private final String LOAD_CONTENT_QUEUE = "SELECT contentid FROM jpnewsletter_contentqueue ";
-	
+        
+        private final String LOAD_NEWSLETTER_ID = "SELECT id FROM jpnewsletter_newsletterreport ";
+        
+        private final String LOAD_NEWSLETTER_DATE = "SELECT date FROM jpnewsletter_newsletterreport WHERE id = ? ";
+        
+        private final String LOAD_NEWSLETTER_SUBJECT = "SELECT subject FROM jpnewsletter_newsletterreport WHERE id = ? ";
+      	
+        private final String LOAD_NEWSLETTER_REPORT = "SELECT * FROM jpnewsletter_newsletterreport WHERE id = ? ";
+
 	private final String CLEAN_CONTENT_QUEUE_PREFIX = "DELETE FROM jpnewsletter_contentqueue WHERE contentid IN ( ";
 	
 	private final String ADD_NEWSLETTER_REPORT = 
 		"INSERT INTO jpnewsletter_newsletterreport ( id, date, subject ) VALUES ( ?, ?, ? )";
-	
+        
 	private final String ADD_CONTENT_REPORT = 
 		"INSERT INTO jpnewsletter_contentreport ( id, newsletterid, contentid, textbody, htmlbody ) VALUES ( ?, ?, ?, ?, ? )";
 	
@@ -850,7 +1006,13 @@ public class NewsletterDAO extends AbstractDAO implements INewsletterDAO {
 		"SELECT c.id, c.newsletterid, c.contentid, c.textbody, c.htmlbody, r.date, r.subject " +
 		"FROM jpnewsletter_contentreport AS c JOIN jpnewsletter_newsletterreport r ON c.newsletterid = r.id " +
 		"WHERE contentid = ? ORDER BY r.date DESC ";
-	
+        
+        private final String LOAD_MAIL_RECIPIENT = 
+		"SELECT COUNT(DISTINCT c.mailaddress) FROM jpnewsletter_recipient AS c JOIN jpnewsletter_contentreport r ON c.contentreportid = r.id WHERE r.newsletterid = ? ";    
+        
+        private final String LOAD_MAILADDRESS_RECIPIENT =
+		"SELECT DISTINCT c.mailaddress FROM jpnewsletter_recipient AS c JOIN jpnewsletter_contentreport r ON c.contentreportid = r.id WHERE r.newsletterid = ? ";    
+
 	private final String LOAD_CONTENT_RECIPIENTS = 
 		"SELECT username, mailaddress FROM jpnewsletter_recipient WHERE contentreportid = ? ";
 	

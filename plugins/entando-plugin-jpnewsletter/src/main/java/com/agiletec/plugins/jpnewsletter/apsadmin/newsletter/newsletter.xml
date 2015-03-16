@@ -67,7 +67,7 @@
 			<result type="tiles">admin.jpnewsletter.Newsletter.Queue.list</result>
 			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
-		
+                		
 		<action name="removeFromQueue" class="jpnewsletterNewsletterQueueAction" method="removeFromQueue" >
 			<result type="tiles">admin.jpnewsletter.Newsletter.Queue.list</result>
 			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
@@ -77,7 +77,26 @@
 			<result type="tiles">admin.jpnewsletter.Newsletter.Queue.detail</result>
 			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
-		
+                
+                
 	</package>
 	
+        <package name="jpnewsletter_do/jpnewsletter/Newsletter/Statistics" namespace="/do/jpnewsletter/Newsletter/Statistics" extends="entando-default">
+		
+		<action name="list" class="jpnewsletterNewsletterStatisticsAction">
+			<result type="tiles">admin.jpnewsletter.Newsletter.Statistics.list</result>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+                </action>
+                
+                <action name="count" class="jpnewsletterNewsletterStatisticsAction" method="countMail">
+			<result type="tiles">admin.jpnewsletter.Newsletter.Statistics.list</result>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+                </action>
+                
+                <action name="detailsNewsletter" class="jpnewsletterNewsletterStatisticsAction" method="detail">
+			<result type="tiles">admin.jpnewsletter.Newsletter.Statistics.detail</result>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+                </action>
+                
+	</package>
 </struts>

@@ -30,13 +30,15 @@ public class PluginConfigTestUtils extends ConfigTestUtils {
 	
 	@Override
 	protected String[] getSpringConfigFilePaths() {
-    	String[] filePaths = new String[6];
+    	String[] filePaths = new String[8];
 		filePaths[0] = "classpath:spring/propertyPlaceholder.xml";
 		filePaths[1] = "classpath:spring/baseSystemConfig.xml";
 		filePaths[2] = "classpath*:spring/aps/**/**.xml";
 		filePaths[3] = "classpath*:spring/apsadmin/**/**.xml";
 		filePaths[4] = "classpath*:spring/plugins/**/aps/**/**.xml";
 		filePaths[5] = "classpath*:spring/plugins/**/apsadmin/**/**.xml";
+                filePaths[6] = "classpath*:spring/portalexample/aps/**/**.xml";
+		filePaths[7] = "classpath*:spring/portalexample/apsadmin/**/**.xml";
 		return filePaths;
     }
 	

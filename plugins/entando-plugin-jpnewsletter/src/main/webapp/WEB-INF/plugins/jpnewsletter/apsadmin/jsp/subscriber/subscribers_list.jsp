@@ -1,8 +1,14 @@
+<%-- 
+    Document   : subscribers_list
+    Created on : 9-feb-2015, 16.32.13
+    Author     : vale
+--%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
+
 
 <h1 class="panel panel-default title-page">
 	<span class="panel-body display-block">
@@ -33,30 +39,70 @@
 			</button>
 		</span>
 	</div>
-	<div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div id="search-advanced" class="collapse well collapse-input-group">
-			<div class="form-group">
-				<label class="control-label col-sm-2 text-right">
-					<s:text name="title.searchFilters" />
-				</label>
-				<div class="col-sm-5 input-group">
-					<wpsf:radio useTabindexAutoIncrement="true" checked="insertedActive == 1" name="insertedActive" value="1" id="jpnewsletter_search_active" cssClass="radiocheck" /><label for="jpnewsletter_search_active"><s:text name="jpnewsletter.label.search.active" /></label>
-					<wpsf:radio useTabindexAutoIncrement="true" checked="insertedActive == 0" name="insertedActive" value="0" id="jpnewsletter_search_not_active" /><label for="jpnewsletter_search_not_active"><s:text name="jpnewsletter.label.search.notactive" /></label>
-					<wpsf:radio useTabindexAutoIncrement="true" checked="insertedActive == null" name="insertedActive" value="" id="jpnewsletter_search_all"/><label for="jpnewsletter_search_all"><s:text name="jpnewsletter.label.search.all" /></label>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-5 col-sm-offset-2">
-					<wpsf:submit action="search" type="button" cssClass="btn btn-primary">
-						<span class="icon fa fa-search"></span>&#32;<s:text name="label.search" />
-					</wpsf:submit>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+        
+            <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="search-advanced" class="collapse well collapse-input-group">
+                            <div class="form-group">
+                                    <label class="control-label col-sm-3  text-right">
+                                            <s:text name="title.searchFilters" />
+                                    </label>
+                                    <div class="col-sm-2 col-sm-offset-1 input-group">
+                                            <wpsf:radio useTabindexAutoIncrement="true" checked="insertedActive == 1" name="insertedActive" value="1" id="jpnewsletter_search_active"/><label for="jpnewsletter_search_active"><s:text name="jpnewsletter.label.search.active" /></label>
+                                            
+                                    </div>
+                                    <div class="col-sm-2 input-group">
+                                            <wpsf:radio useTabindexAutoIncrement="true" checked="insertedActive == 0" name="insertedActive" value="0" id="jpnewsletter_search_not_active"/><label for="jpnewsletter_search_not_active"><s:text name="jpnewsletter.label.search.notactive" /></label>
+                                    </div>  
+                                    <div class="col-sm-2 input-group">
+                                            <wpsf:radio useTabindexAutoIncrement="true" checked="insertedActive == null" name="insertedActive" value="" id="jpnewsletter_search_all"  /><label for="jpnewsletter_search_all" ><s:text name="jpnewsletter.label.search.all"/></label>
+                                    </div>
+                                    <div class="col-sm-1 ">
+                                            <wpsf:submit action="search" type="button" cssClass="btn btn-primary">
+                                                    <span class="icon fa fa-search"></span>&#32;<s:text name="label.search" />
+                                            </wpsf:submit>
+                                    </div>
+                            </div>
+                    </div>
+            </div>
+                              
+
 
 </s:form>
+<s:if test="hasFieldErrors()">
+        <div class="alert alert-danger alert-dismissable fade in">
+                <button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+                <h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+                <ul class="margin-base-top">
+                        <s:iterator value="fieldErrors">
+                                <s:iterator value="value">
+                                        <li><s:property escape="false" /></li>
+                                </s:iterator>
+                        </s:iterator>
+                </ul>
+        </div>
+</s:if>
+<s:if test="hasActionErrors()">
+    <div class="alert alert-danger alert-dismissable fade in margin-base-top">
+            <button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+            <h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
+            <ul class="margin-base-top">
+            <s:iterator value="ActionErrors">
+                    <li><s:property escape="false" /></li>
+            </s:iterator>
+            </ul>
+    </div>
+</s:if>
+<s:if test="hasActionMessages()">
+    <div class="alert alert-success alert-dismissable fade in">
+            <button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+            <h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>
+            <ul class="margin-base-top">
+                    <s:iterator value="actionMessages">
+                            <li><s:property escape="false" /></li>
+                    </s:iterator>
+            </ul>
+    </div>
+</s:if>
 <div class="subsection-light">
 
 <s:set var="subscribersVar" value="subscribers" />
@@ -76,7 +122,7 @@
 					<th><s:text name="label.subscribtionDate" /></th>
 					<th><abbr title="<s:text name="label.state.active.full" />"><s:text name="label.state.active.short" /></abbr></th>
 				</tr>
-				<s:iterator value="#subscribersVar" var="subscriber">
+				<s:iterator var="subscriber">
 				<tr>
 					<td class="text-center text-nowrap">
 						<s:url var="removeActionVar" action="trash"><s:param name="mailAddress" value="#subscriber.mailAddress" /></s:url>
@@ -120,5 +166,44 @@
 	</div>
 </s:else>
 
-</div>
-</div>
+
+
+
+   
+<p class="upload"><s:text name="jpnewsletter.subscribers.introUpload"/> </p>               
+                  
+<s:form action="upload"  method="post" enctype="multipart/form-data" cssClass="margin-base-top form-horizontal" >
+
+    <div class="input-group"> 
+                       <div class="form-control">
+                           <s:file name="fileUpload" id="file-upload"  accept=".csv,text/csv" />
+                        </div>
+                          
+                        <div class="input-group-btn">
+                            <wpsf:submit action="upload" type="button" cssClass="btn btn-file btn-primary">
+                                <span class="icon fa fa-upload"></span>&#32;
+                                <s:text name="jpnewsletter.label.upload" />
+                            </wpsf:submit>
+                        </div>
+    </div>	
+   
+</s:form>
+
+
+<p class="upload"><s:text name="jpnewsletter.subscribers.textAreaUpload"/> </p>               
+
+<s:form action="insertMail"  method="post" enctype="multipart/form-data" cssClass="margin-base-top form-horizontal">
+    
+    <div class="row">
+        <div class="input-group col-md-6 ">
+            <s:textarea name="mailInsert" id="mail_insert" cssClass="form-control" rows="10" placeholder="prova@email.com; prova2@mail.com;"/>
+        </div>
+    </div>  
+        
+    <wpsf:submit action="insertMail" type="button" cssClass="margin-base-top btn btn-primary">
+            <span class="icon fa fa-upload"></span>&#32;
+            <s:text name="jpnewsletter.label.upload" />
+    </wpsf:submit>			
+			
+</s:form>
+ 

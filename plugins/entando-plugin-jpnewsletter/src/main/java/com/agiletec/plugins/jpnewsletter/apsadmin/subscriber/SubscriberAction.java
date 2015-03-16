@@ -22,14 +22,26 @@
 package com.agiletec.plugins.jpnewsletter.apsadmin.subscriber;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.util.FileTextReader;
 import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.INewsletterManager;
+import java.io.BufferedReader;
+import java.util.StringTokenizer;
+import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Subscriber;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 /**
- * @author A.Turrini
+ * @author V.Manca
  */
-public class SubscriberAction extends BaseAction {
-	
+public class SubscriberAction extends BaseAction  {
+
+        
 	public String trashSubscriber() {
 		return SUCCESS;
 	}
@@ -44,7 +56,104 @@ public class SubscriberAction extends BaseAction {
 		}
 
 	}
-	
+      
+        public String readText(String text)
+        {
+            try {
+                        StringReader stringReader= new StringReader(text);
+                        BufferedReader br = new BufferedReader(stringReader);
+                        List<Subscriber> subscribers = this.getNewsletterManager().searchSubscribers(null, Boolean.TRUE);
+                        List<Subscriber> subscribers_2 = this.getNewsletterManager().searchSubscribers(null, Boolean.FALSE);
+                        subscribers.addAll(subscribers_2);
+                        List<String> subscribersMails = new ArrayList<String>();
+                        for (int i = 0; i < subscribers.size(); i++) {
+                                Subscriber subscriber = subscribers.get(i);
+                                subscribersMails.add(subscriber.getMailAddress());
+                        }
+                        while(true){
+                            text=br.readLine();
+                            if(text==null) break;
+                            String [] splits = text.split("\\n|;|,|''");
+                            for(String mail:splits){
+                                mail = mail.trim();
+                                mail = mail.replaceAll("\\s+","");
+                             if(subscribersMails.contains(mail)) {
+                                                this.addActionError(this.getText("Errors.newsletter.emailDuplicated", new String[]{mail}));
+                                        } else {
+                                            subscribersMails.add(mail);
+                                                this.addActionMessage(this.getText("message.newsletter.emailValid", new String[]{mail}));
+                                                this.getNewsletterManager().addSubscriber(mail);
+                                        }         
+                            }                        
+                        }
+                        if (this.hasActionErrors()) {
+                                    return INPUT;
+                                }
+                                if (this.hasActionMessages()) {
+                                    return INPUT;
+                                }                        
+                        } catch (Throwable t) {
+                            ApsSystemUtils.logThrowable(t, this, "upload");
+                            return FAILURE;
+                        }
+                return SUCCESS;         
+        }
+        
+        public String upload() {
+                try {  
+                        InputStream is = new FileInputStream(this.getFileUpload());
+                        String text = FileTextReader.getText(is);  
+                        readText(text);
+                }catch (Throwable t) {
+                            ApsSystemUtils.logThrowable(t, this, "upload");
+                            return FAILURE;
+                }
+                return SUCCESS;
+        }
+
+        public String insertMail() {
+                try {
+                        String text = getMailInsert();
+                        readText(text);                    
+                    }catch (Throwable t) {
+                            ApsSystemUtils.logThrowable(t, this, "upload");
+                            return FAILURE;
+                }      
+                return SUCCESS;             
+        }
+        
+        
+        
+        public void setMailInsert(String mailInsert){
+            this._insertMail = mailInsert;
+        }
+        
+        public String getMailInsert(){
+            return _insertMail;
+        }
+        
+        public void setFileUploadContentType(String contentType){
+            this._contentType = contentType;
+        }
+        
+        public void setFileUpload(File fileUpload){
+            this._file = fileUpload;
+        }
+        public void setFileUploadName(String fileName){
+            this._fileName = fileName;
+        }
+        
+        public String getFileUploadContentType(){
+            return _contentType;
+        }
+       
+        public File getFileUpload(){
+            return _file;
+        }
+        public String getFileUploadName(){
+             return _fileName;
+        }
+        
 	public String getMailAddress() {
 		return _mailAddress;
 	}
@@ -52,15 +161,23 @@ public class SubscriberAction extends BaseAction {
 		_mailAddress = mailAddress;
 	}
 	
-	protected INewsletterManager getNewsletterManager() {
+            protected INewsletterManager getNewsletterManager() {
 		return _newsletterManager;
 	}
 	public void setNewsletterManager(INewsletterManager newsletterManager) {
 		_newsletterManager = newsletterManager;
-	}
-	
+        }
+        
 	private String _mailAddress;
-	
+      
 	private INewsletterManager _newsletterManager;
-	
+        
+        private String _insertMail;
+        private File _file;
+        private String _contentType;
+        private String _fileName;
+    
+    
+        
+
 }

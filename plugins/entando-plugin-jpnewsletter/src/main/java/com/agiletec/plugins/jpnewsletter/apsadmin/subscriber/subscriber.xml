@@ -9,7 +9,10 @@
 		
 		<action name="list" class="jpnewsletterSubscriberFinderAction">
 			<result type="tiles">admin.jpnewsletter.Subscriber.list</result>
-			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack">
+                            <param name="requestAuth.requiredPermission">jpnewsletter_management</param>
+                            <param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
+                        </interceptor-ref>
 		</action>
 		
 		<action name="search" class="jpnewsletterSubscriberFinderAction">
@@ -26,6 +29,25 @@
 			<result type="tiles">admin.jpnewsletter.Subscriber.confirm</result>
 			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
+                
+                <action name="upload" class="jpnewsletterSubscriberAction" method="upload">
+                        <result name="input" type="chain">list</result>
+                        <result type="chain">list</result>
+                        <interceptor-ref name="apsFileUpload" />
+                        <interceptor-ref name="entandoDefaultStack">
+                            <param name="requestAuth.requiredPermission">jpnewsletter_management</param>
+                        </interceptor-ref>
+                </action>
+                
+                <action name="insertMail" class="jpnewsletterSubscriberAction" method="insertMail">
+                        <result name="input" type="chain">list</result>
+                        <result type="chain">list</result>
+                        <interceptor-ref name="entandoDefaultStack">
+                            <param name="requestAuth.requiredPermission">jpnewsletter_management</param>
+                        </interceptor-ref>
+
+                </action>
+                	          
 		
 	</package>
 	

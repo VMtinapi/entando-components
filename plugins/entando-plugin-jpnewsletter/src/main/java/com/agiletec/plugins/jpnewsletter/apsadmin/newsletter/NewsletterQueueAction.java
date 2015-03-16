@@ -91,7 +91,8 @@ public class NewsletterQueueAction extends BaseAction {
 		}
 		return contentVo;
 	}
-	
+        
+
 	public String getContentId() {
 		return _contentId;
 	}

@@ -22,7 +22,9 @@
 package com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author E.Santoboni
@@ -66,11 +68,27 @@ public class ContentReport {
 	public void addRecipient(String username, String eMail) {
 		this._recipients.put(username, eMail);
 	}
+        
+        public void addFreeRecipient(String eMail)
+        {
+                this._freeRecipients.add(eMail);
+        }
+        
+        public void setFreeRecipients(Set<String> _freeRecipients) {
+                this._freeRecipients = _freeRecipients;
+        }
+
+        public Set<String> getFreeRecipients() {
+                return _freeRecipients;
+        }
 	
 	private int _id;
 	private String _contentId;
 	private String _textBody;
 	private String _htmlBody;
 	private Map<String, String> _recipients = new HashMap<String, String>();
+        private Set<String> _freeRecipients = new HashSet<String>();
+
+    
 	
 }

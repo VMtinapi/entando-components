@@ -32,6 +32,14 @@
 		<property name="newsletterManager" ref="jpnewsletterNewsletterManager"/>
 		<property name="contentManager" ref="jacmsContentManager"/>
 	</bean>
+        
+        <bean id="jpnewsletterNewsletterStatisticsAction" scope="prototype" 
+			class="com.agiletec.plugins.jpnewsletter.apsadmin.newsletter.NewsletterStatisticsAction" 
+			parent="abstractBaseAction" >
+		<property name="newsletterManager" ref="jpnewsletterNewsletterManager"/>
+		<property name="contentManager" ref="jacmsContentManager"/>
+                
+	</bean>
 	
 	<bean id="jpnewsletterNewsletterConfigAction" scope="prototype" 
 			class="com.agiletec.plugins.jpnewsletter.apsadmin.config.NewsletterConfigAction" 
@@ -64,5 +72,9 @@
 			parent="abstractBaseAction">
 		<property name="newsletterManager" ref="jpnewsletterNewsletterManager" />
 	</bean>
+       
+        
+
+        
 	
 </beans>

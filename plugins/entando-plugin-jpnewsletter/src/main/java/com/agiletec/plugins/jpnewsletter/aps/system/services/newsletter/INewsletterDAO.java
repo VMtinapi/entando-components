@@ -28,6 +28,8 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterContentReportVO;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterReport;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Subscriber;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author E.Mezzano, A.Turrini
@@ -69,5 +71,18 @@ public interface INewsletterDAO {
 	public void removeToken(String token);
 	
 	public void cleanOldSubscribers(Date date);
+        
+        public List<String> loadNewsletterId() throws ApsSystemException;
+     
+        public Integer loadMail(Integer newsletterId) throws ApsSystemException;
+        
+        public List<String> loadMailAddress(Integer newsletterid) throws ApsSystemException;
+        
+        public Date loadDate(Integer newsletterid) throws ApsSystemException;
+        
+        public String loadSubject(Integer newsletterid) throws ApsSystemException;
+        
+	public NewsletterReport loadNewsletterReport(Integer newsletterid);
+        
 	
 }

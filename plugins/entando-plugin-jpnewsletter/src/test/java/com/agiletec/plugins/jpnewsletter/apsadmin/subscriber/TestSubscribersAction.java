@@ -54,6 +54,22 @@ public class TestSubscribersAction extends ApsAdminPluginBaseTestCase {
 			throw t;
 		}
 	}
+        
+        public void testInsertMail() throws Throwable
+        {
+            String mailInsert ="valentinamancasedilo@gmail.com,e.santoboni@entando.com";
+            try{
+                this.initAction("/do/jpnewsletter/Subscriber", "insertMail");
+                this.addParameter("mailInsert", mailInsert);
+                this.setUserOnSession("admin");
+                String result = this.executeAction();
+		assertEquals(Action.INPUT, result);
+                //assertNull(this._newsletterManager.loadSubscribers());
+            }catch(Throwable t){
+                this._newsletterManager.deleteSubscriber(mailInsert);
+		throw t;
+            }
+        }
 	
 	private void init() throws Exception {
 		try {

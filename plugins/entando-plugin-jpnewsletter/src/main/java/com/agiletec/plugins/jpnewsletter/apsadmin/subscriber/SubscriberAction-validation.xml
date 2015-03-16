@@ -1,0 +1,21 @@
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+	
+	
+	
+	<field name="fileUpload">
+		<field-validator type="fieldexpression" short-circuit="true">
+			<param name="expression"><![CDATA[!(upload == null)]]></param>
+			<message key="error.jpnewsletter.file.required" />
+		</field-validator>
+                <field-validator type="fieldexpression" short-circuit="true">
+			<param name="expression"><![CDATA[!(inputStream == null)]]></param>
+			<message key="error.jpnewsletter.file.void" />
+		</field-validator>
+		
+	</field>
+
+</validators>

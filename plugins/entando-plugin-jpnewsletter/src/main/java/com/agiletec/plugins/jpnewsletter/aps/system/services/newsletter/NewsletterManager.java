@@ -194,6 +194,71 @@ public class NewsletterManager extends AbstractService
 			throw new ApsSystemException("Errore in caricamento coda contenuti newsLetter", t);
 		}
 	}
+        
+        @Override
+	public List<String> getNewsletterId() throws ApsSystemException {
+		try {
+			return this.getNewsletterDAO().loadNewsletterId();
+		} catch (Throwable t) {
+			_logger.error("Error loading newsletter id", t);
+			throw new ApsSystemException("Errore in caricamento id della newsletter", t);
+		}
+	}
+        
+        @Override
+	public Integer getMail(Integer id) throws ApsSystemException {
+		try {
+			return this.getNewsletterDAO().loadMail(id);
+		} catch (Throwable t) {
+			_logger.error("Error loading mail", t);
+			throw new ApsSystemException("Errore in caricamento mail", t);
+		}
+	}
+        
+        @Override
+        public List<String> getMailAddress(Integer id) throws ApsSystemException {
+		try {
+			return this.getNewsletterDAO().loadMailAddress(id);
+		} catch (Throwable t) {
+			_logger.error("Error loading mailAddress", t);
+			throw new ApsSystemException("Errore in caricamento mailAddress", t);
+		}
+	}
+        
+         @Override
+        public Date getDate(Integer id) throws ApsSystemException {
+		try {
+			return this.getNewsletterDAO().loadDate(id);
+		} catch (Throwable t) {
+			_logger.error("Error loading mailAddress", t);
+			throw new ApsSystemException("Errore in caricamento mailAddress", t);
+		}
+	}
+        
+        @Override
+	public String getSubject(Integer id) throws ApsSystemException {
+		try {
+			return this.getNewsletterDAO().loadSubject(id);
+		} catch (Throwable t) {
+			_logger.error("Error loading mail", t);
+			throw new ApsSystemException("Errore in caricamento mail", t);
+		}
+	}
+        
+        
+        @Override
+        public NewsletterReport getNewsletterReport(Integer newsletterid) throws ApsSystemException {
+            NewsletterReport newsletterReport = null;
+            try {
+                newsletterReport = this.getNewsletterDAO().loadNewsletterReport(newsletterid);
+            } catch (Throwable t) {
+                            _logger.error("Error loading cards",  t);
+                throw new ApsSystemException("Error loading cards", t);
+            }
+            return newsletterReport;
+    }
+        
+        
 	
 	@Override
 	public boolean existsContentReport(String contentId) throws ApsSystemException {
@@ -393,6 +458,10 @@ public class NewsletterManager extends AbstractService
 			_logger.error("Error on 'sendNewsletterToUser' method", t);
 		}
 	}
+        
+        
+        
+       
 	
 	protected String prepareMailBody(List<Content> userContents, NewsletterReport newsletterReport, boolean isHtml) {
 		StringBuffer body = this.prepareMailCommonBody(userContents, newsletterReport, isHtml);
@@ -695,6 +764,23 @@ public class NewsletterManager extends AbstractService
 			throw new ApsSystemException("Error adding subscriber", t);
 		}
 	}
+        
+        /*aggiunta io per textarea*/
+        @Override
+        public void addSubscribers(String mailAddress, Boolean active) throws ApsSystemException {
+		try {
+			Subscriber subscriber = new Subscriber();
+			subscriber.setMailAddress(mailAddress);
+			subscriber.setSubscriptionDate(new Date());
+			subscriber.setActive(active);
+			String token = this.createToken(mailAddress);
+			this.getNewsletterDAO().addSubscriber(subscriber, token);
+			this.sendSubscriptionMail(mailAddress, token);
+		} catch (Throwable t) {
+			_logger.error("Error adding subscriber {}", mailAddress, t);
+			throw new ApsSystemException("Error adding subscriber", t);
+		}
+	}
 	
 	@Override
 	public void resetSubscriber(String mailAddress) throws ApsSystemException {
@@ -895,7 +981,15 @@ public class NewsletterManager extends AbstractService
 			} else {
 				this.getMailManager().sendMail(simpleText, config.getSubject(), null, null, emailAddresses, config.getSenderCode());
 			}
+                        
+                        for(Content content : contents)
+                        {  
+                                ContentReport contentReport = newsletterReport.getContentReport(content.getId());
+                                contentReport.addFreeRecipient(mailAddress);
+                        }    
+                         
 		}
+                
 	}
 	
 	private String prepareSubscribersMailBody(List<Content> userContents, NewsletterReport newsletterReport, boolean isHtml, String mailAddress) {

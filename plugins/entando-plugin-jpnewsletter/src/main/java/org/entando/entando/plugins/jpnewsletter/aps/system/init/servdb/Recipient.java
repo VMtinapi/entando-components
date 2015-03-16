@@ -41,7 +41,7 @@ public class Recipient implements ExtendedColumnDefinition {
 	
 	@DatabaseField(columnName = "username", 
 			dataType = DataType.STRING, 
-			width = 40, canBeNull = false)
+			width = 40, canBeNull = true)
 	private String _username;
 	
 	@DatabaseField(columnName = "mailaddress", 
@@ -58,7 +58,7 @@ public class Recipient implements ExtendedColumnDefinition {
 			contentReportTableName = "`" + contentReportTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + TABLE_NAME + " "
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_pkey PRIMARY KEY(contentreportid, username)", 
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_pkey PRIMARY KEY(contentreportid, mailaddress)", 
 			"ALTER TABLE " + tableName + " " 
 				+ "ADD CONSTRAINT " + TABLE_NAME + "_fkey FOREIGN KEY (contentreportid) "
 				+ "REFERENCES " + contentReportTableName + " (id)"};
