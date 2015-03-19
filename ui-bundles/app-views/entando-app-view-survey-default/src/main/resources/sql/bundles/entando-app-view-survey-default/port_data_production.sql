@@ -214,3 +214,6 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpsurvey_POLLS
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_DO_LOGIN', 'en', 'Sign in if you want to participate.');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_DO_LOGIN', 'it', 'Accedi se vuoi partecipare.');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_LIST_QUESTIONNAIRE', 'en', 'List of questionnaires.');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_LIST_QUESTIONNAIRE', 'it', 'Lista dei questionari.');
