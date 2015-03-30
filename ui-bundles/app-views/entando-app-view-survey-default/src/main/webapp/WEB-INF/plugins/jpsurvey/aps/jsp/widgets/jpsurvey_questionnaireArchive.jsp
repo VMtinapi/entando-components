@@ -1,17 +1,31 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="jpsu" uri="/jpsurvey-aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<wp:headInfo type="CSS" info="../../plugins/jpsurvey/view_portal/css/glyphicons-extended.min.css" />
+<wp:headInfo type="CSS" info="../../plugins/jpsurvey/view_portal/css/view_portal.css" />
+
 <% pageContext.setAttribute("newLine", "\n"); %> 
 <wp:info key="currentLang" var="currentLang" />
 <wp:info key="defaultLang" var="defaultLang" />
+
 <wp:pageWithWidget var="surveyDetailsPageCode" widgetTypeCode="jpsurvey_detailsSurvey" />
+
 <jpsu:surveyList ctxName="pollList" category="questionnaire" expired="true" />
-<c:if test="${!(empty pollList)}">
-	<ul class="unstyled jpsurvey-list archive">
-		<c:forEach var="currentSurveyItem" items="${pollList}">
+
+<h1 id="title"> <wp:i18n key="JPSURVEY_QUESTIONNAIRE_ARCHIVE" /></h1>
+
+<c:choose>
+<c:when test="${!(empty pollList)}">
+    <div class="table-resposive">
+        <table class="table table-bordered" summary="table">
+                <th class="center">&minus;</th>
+                <th><wp:i18n key="JPSURVEY_TITLE_QUESTIONNAIRE" /></th>
+                <th><wp:i18n key="JPSURVEY_DESCRIPTION" /></th>
+                <tr><c:forEach var="currentSurveyItem" items="${pollList}">
 			<jpsu:loadSurvey ctxName="currentSurvey" surveyId="${currentSurveyItem}" preferredLang="${currentLang}" votedParamName="voted" ctxImageUrl="imageURL" imageDimension="1" />
-			<li class="media">
+			
 				<%/*Vote*/%>
 				<c:choose>
 					<c:when test="${voted}"><wp:i18n key="JPSURVEY_YOU_HAVE_VOTED" var="votationVar" /></c:when>
@@ -25,51 +39,47 @@
 				</c:choose>
 				<%/*Url*/%>
 				<wp:url page="${surveyDetailsPageCode.code}" var="surveyUrlVar"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>
-				<h2>
-					<a 
+				
+                                    <td><a 
 						href="<c:out value="${surveyUrlVar}" />" 
 						title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[defaultLang]}"/>"
 						>
-						<c:out value="${currentSurvey.titles[defaultLang]}"/>
-					</a>
+                                                <span class="icon icon-info-sign"></span>
+						
+                                </a></td>
 					&ensp;
-					<span class="label"><c:out value="${votationVar}" /></span>
-				</h2>
-			<c:if test="${not empty currentSurvey.imageId}">
-				<c:choose>
-					<c:when test="${not empty currentSurvey.imageDescriptions[currentLang]}"><c:set var="imageDescr" value="${currentSurvey.imageDescriptions[currentLang]}" /></c:when>
-					<c:otherwise><c:set var="imageDescr" value="${currentSurvey.imageDescriptions[defaultLang]}" /></c:otherwise>
-				</c:choose>
-				<a 
-					href="<c:out value="${surveyUrlVar}" />"
-					title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[defaultLang]}"/>"
-					class=" pull-left " 
-					>
-					<img class="img-polaroid" alt="<c:out value="${imageDescr}" />" src="<c:out value="${imageURL}" />"/>
-				</a>
-			</c:if>
+                                        <td><c:out value="${currentSurvey.titles[defaultLang]}"/></td>
+				
+			
 				<%/* Descr */%>
 				<c:choose>
 					<c:when test="${not empty currentSurvey.descriptions[currentLang]}"><c:set var="surveyDescriptionVar"><c:out value="${currentSurvey.descriptions[currentLang]}"/></c:set></c:when>
 					<c:otherwise><c:set var="surveyDescriptionVar"><c:out value="${currentSurvey.descriptions[defaultLang]}"/></c:set></c:otherwise>
 				</c:choose>
-				<p>
+                               <td>
 					<c:out value="${fn:replace(surveyDescriptionVar, newLine, '<br />')}" escapeXml="false"  />
-				</p>
-			</li>
+                                </td>
+			</tr>
 		</c:forEach>
-	</ul>
-</c:if>
+        
+</c:when>
+    <c:otherwise>
+        <div class="alert alert-warning">
+                        <wp:i18n key="JPSURVEY_ALERT_NOT_ARCHIVE_QUESTIONNAIRE" />
+        </div>
+    </c:otherwise>
+</c:choose>                               
 
+    </table>
+   
 <wp:pageWithWidget var="archivePageVar" widgetTypeCode="jpsurvey_questionnaireList" />
-<p>
-	<span class="label label-info">
-		<wp:i18n key="JPSURVEY_POLLS_ARCHIVE_INTRO" />
-		&#32;
+
+    
+	<button class="btn btn-info btn-md pull-right">
 		<a 
-			href="<wp:url page="${archivePageVar.code}" />" 
-			title="<wp:i18n key="JPSURVEY_GO_TO_ACTIVE_QUESTIONNAIRE" />">
+			href="<wp:url page="${archivePageVar.code}" />" class="link">
 			<wp:i18n key="JPSURVEY_ACTIVE_QUESTIONNAIRE" />
-		</a>.
-	</span>
-</p>
+		</a>
+	</button>
+
+</div>

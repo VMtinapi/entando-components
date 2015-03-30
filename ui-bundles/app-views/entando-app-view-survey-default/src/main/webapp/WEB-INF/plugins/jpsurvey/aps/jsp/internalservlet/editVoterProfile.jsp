@@ -4,17 +4,24 @@
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<wp:headInfo type="CSS" info="../../plugins/jpsurvey/view_portal/css/glyphicons-extended.min.css" />
+<wp:headInfo type="CSS" info="../../plugins/jpsurvey/view_portal/css/view_portal.css" />
+
 <% pageContext.setAttribute("newLine", "\n"); %> 
 <s:set name="surveyInfo" value="voterResponse.survey" />
 <div class="jpsurvey-voter-profile">
-	<h1><s:property value="%{getLabel(#surveyInfo.titles)}" /></h1>
-	<dl class="dl-horizontal">
-		<%--
-		<dt><wp:i18n key="JPSURVEY_TITLE" /></dt>
-			<dd><p><s:property value="%{getLabel(#surveyInfo.titles)}" /></p></dd>
-		--%>
-		<dt><p><wp:i18n key="JPSURVEY_DESCRIPTION" /></p></dt>
-			<dd>
+	<h1 id="title" ><s:property value="%{getLabel(#surveyInfo.titles)}" /></h1>
+	<div>
+		
+			
+                        <div class="row-fluid">
+                        <%-- Description --%>
+                            <div class="span9">
+                                <%-- Description --%>
+				<c:set var="surveyDescriptionVar"><s:property value="%{getLabel(#surveyInfo.descriptions)}" /></c:set>
+				<p><c:out value="${fn:replace(surveyDescriptionVar, newLine, '<br />')}" escapeXml="false"  /></p>
+                            </div>  
+                            <div class="span3">
 				<%-- Image --%>
 				<s:set name="imageURL" value="%{getSurveyImageURL(surveyInfo.imageId,2)}" />
 				<s:if test="#imageURL != null && #imageURL != '' ">
@@ -25,11 +32,11 @@
 							src="<s:property value="#imageURL"/>" />
 					</p>
 				</s:if>
-				<%-- Description --%>
-				<c:set var="surveyDescriptionVar"><s:property value="%{getLabel(#surveyInfo.descriptions)}" /></c:set>
-				<p><c:out value="${fn:replace(surveyDescriptionVar, newLine, '<br />')}" escapeXml="false"  /></p>
-			</dd>
-	</dl>
+				
+			
+                            </div>
+                        </div>
+	</div>
 	<form 
 		class="form-horizontal"
 		action="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/saveVoterProfile.action" />" 
@@ -61,27 +68,25 @@
 		<p class="noscreen">
 			<wpsf:hidden name="surveyId" />
 		</p>
-		<div class="control-group">
-			<div class="controls">
-				<p class="label label-info"><wp:i18n key="JPSURVEY_PROFILE_NEEDED" /></p>
-			</div>
-		</div>
 		
-		<div class="control-group">
+		<p class="alert alert-info"><wp:i18n key="JPSURVEY_PROFILE_NEEDED" /></p>
+			
+		
+		<div class="control-group form">
 			<label class="control-label" for="jpsurvey-age"><wp:i18n key="JPSURVEY_AGE" /></label>
 			<div class="controls">
 				<wpsf:textfield useTabindexAutoIncrement="true" name="age" id="jpsurvey-age" />
 			</div>
 		</div>
 
-		<div class="control-group">
+		<div class="control-group form">
 			<label class="control-label" for="jpsurvey-country"><wp:i18n key="JPSURVEY_COUNTRY" /></label>
 			<div class="controls">
 				<wpsf:textfield useTabindexAutoIncrement="true" name="country" id="jpsurvey-country" />
 			</div>
 		</div>
 
-		<div class="control-group">
+		<div class="control-group form">
 			<label class="control-label" for="jpsurvey-sex"><wp:i18n key="JPSURVEY_SEX" /></label>
 			<div class="controls">
 				<wpsf:select 
@@ -93,12 +98,16 @@
 			</div>
 		</div>
 
-		<p class="form-actions">
-			<wpsf:submit 
-				useTabindexAutoIncrement="true" 
-				value="%{getText('label.save')}" 
-				cssClass="btn btn-primary" 
-				/>
-		</p>
+		<div class="center">
+                <div class="row margin-none margin-large-top">
+                <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+		<wpsf:submit type="button" cssClass="btn btn-primary" title="%{getText('label.continue')}" >
+			<span class="icon icon-play-circle icon-white"></span>
+			<s:text name="%{getText('label.continue')}" />
+		</wpsf:submit>
+                    
+	</div>
+</div>
+                </div>
 	</form>
 </div>

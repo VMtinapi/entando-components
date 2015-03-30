@@ -16,8 +16,8 @@
 	</s:else>
 	
 	<strong><wp:i18n key="JPSURVEY_THANKS_FOR" /></strong>
-	&#32;
-	<a href="<wp:url page="${archivePageVar.code}"></wp:url>" title="<c:out value="${titleLabelVar}" />" >
+
+        <a href="<wp:url page="${archivePageVar.code}"></wp:url>" title="<c:out value="${titleLabelVar}" />" >
 		<c:out value="${descrLabelVar}" escapeXml="false" />
 	</a>
 	

@@ -1,4 +1,3 @@
-
 INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpsurvey_pollArchive', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Surveys - Surveys Archive</property>
@@ -36,16 +35,25 @@ INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode,
 
 INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpsurvey_resultsSurvey', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Questionnaire/Survey - Show Results</property>
-<property key="it">Questionario/Sondaggio - Mostra Risultati</property>
+<property key="en">Survey - Show Results</property>
+<property key="it">Sondaggio - Mostra Risultati</property>
 </properties>', NULL, 'jpsurvey', 'formAction', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="actionPath">/ExtStr2/do/jpsurvey/Front/SurveyDetail/entryPoint.action</property>
 </properties>', 1);
 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpsurvey_entry', '<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+<property key="en">Start survey</property>
+<property key="it">Inizio Sondaggio</property>
+</properties>', NULL, 'jpsurvey', 'formAction', '<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+<property key="actionPath">/ExtStr2/do/jpsurvey/Front/Survey/startSurvey.action</property>
+</properties>', 1);
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ACTIVE_QUESTIONNAIRE', 'en', 'active Questionnaires');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ACTIVE_QUESTIONNAIRE', 'it', 'questionari attivi');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ACTIVE_QUESTIONNAIRE', 'en', 'Active Questionnaires');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ACTIVE_QUESTIONNAIRE', 'it', 'Questionari Attivi');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_AGE', 'en', 'Age');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_AGE', 'it', 'Età');
@@ -93,7 +101,7 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ERRO
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ERROR_USER_NOT_ALLOWED', 'it', 'Errore! Utente non autorizzato.');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_FINAL_RESULTS', 'en', 'Final Results');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_FINAL_RESULTS', 'it', 'Risultati finali');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_FINAL_RESULTS', 'it', 'Risultati Finali');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_FREE_TEXT', 'en', 'Free Text');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_FREE_TEXT', 'it', 'Testo Libero');
@@ -101,8 +109,8 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_FREE
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO', 'en', 'Send');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO', 'it', 'Invia');
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO_ACTIVE_POLLS', 'en', 'active Surveys');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO_ACTIVE_POLLS', 'it', 'sondaggi attivi');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO_ACTIVE_POLLS', 'en', 'Active Surveys');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO_ACTIVE_POLLS', 'it', 'Sondaggi Attivi');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO_TO_ACTIVE_POLLS', 'en', 'Go to the list of active surveys');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_GO_TO_ACTIVE_POLLS', 'it', 'Vai alla lista dei sondaggi attivi');
@@ -135,7 +143,7 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_OBTA
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_OBTAINED', 'it', 'ha ottenuto');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_PARTIAL_RESULTS', 'en', 'Subtotals');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_PARTIAL_RESULTS', 'it', 'Risultati parziali');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_PARTIAL_RESULTS', 'it', 'Risultati Parziali');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_PERSON', 'en', 'people.');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_PERSON', 'it', 'persone.');
@@ -143,8 +151,8 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_PERS
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL', 'en', 'survey');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL', 'it', 'sondaggio');
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL_ARCHIVE', 'en', 'Archive');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL_ARCHIVE', 'it', 'Archivio');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL_ARCHIVE', 'en', 'Archive Survey');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL_ARCHIVE', 'it', 'Archivio Sondaggi');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL_STARTDAY', 'en', 'The survey was published');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_POLL_STARTDAY', 'it', 'Il sondaggio è stato pubblicato');
@@ -170,8 +178,8 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUES
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTION_OF', 'en', 'of');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTION_OF', 'it', 'di');
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTIONNAIRE_ARCHIVE', 'en', 'Archive');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTIONNAIRE_ARCHIVE', 'it', 'Archivio');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTIONNAIRE_ARCHIVE', 'en', 'Archive Questionnaires');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTIONNAIRE_ARCHIVE', 'it', 'Archivio Questionari');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTIONNAIRE_LIST_INTRO', 'en', 'If you want, you can see the list of expired surveys browsing the');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_QUESTIONNAIRE_LIST_INTRO', 'it', 'Se vuoi puoi vedere i questionari scaduti nell''');
@@ -203,14 +211,56 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_HAVE_VOTED', 'en', 'You have already voted');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_HAVE_VOTED', 'it', 'Hai già votato');
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_NOT_VOTED', 'en', '(You have not voted)');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_NOT_VOTED', 'it', '(Non hai ancora votato)');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_NOT_VOTED', 'en', 'You have not voted');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_NOT_VOTED', 'it', 'Non hai ancora votato');
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_VOTED', 'en', '(You have already voted)');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_VOTED', 'it', '(Hai già votato)');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_VOTED', 'en', 'You have already voted');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_VOTED', 'it', 'Hai già votato');
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpsurvey_POLLS_ARCHIVE_LIST_TITLE', 'en', 'Surveys Archive');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpsurvey_POLLS_ARCHIVE_LIST_TITLE', 'it', 'Archivio dei Sondaggi');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_DO_LOGIN', 'en', 'Sign in if you want to participate.');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_DO_LOGIN', 'it', 'Accedi se vuoi partecipare.');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_LIST_QUESTIONNAIRE', 'en', 'List of Questionnaires');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_LIST_QUESTIONNAIRE', 'it', 'Lista dei Questionari');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_TITLE_QUESTIONNAIRE', 'en', 'Name Questionnaire');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_TITLE_QUESTIONNAIRE', 'it', 'Nome questionario');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTED', 'en', 'Do you have partecipate?');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTED', 'it', 'Hai partecipato?');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_QUESTIONNAIRE', 'en', 'There are not active questionnaires.');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_QUESTIONNAIRE', 'it', 'Non sono presenti questionari attivi.');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_ARCHIVE_QUESTIONNAIRE', 'en', 'There are not questionnaires.');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_ARCHIVE_QUESTIONNAIRE', 'it', 'Non sono presenti questionari.');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_TITLE_SURVEY', 'en', 'Name Survey');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_TITLE_SURVEY', 'it', 'Nome Sondaggio');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_SURVEY', 'en', 'There are not active survey.');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_SURVEY', 'it', 'Non sono presenti sondaggi attivi.');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_ARCHIVE_SURVEY', 'en', 'There are not survey.');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_ALERT_NOT_ARCHIVE_SURVEY', 'it', 'Non sono presenti sondaggi.');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_START_DATE', 'en', 'Start Date');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_START_DATE', 'it', 'Data Inizio');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_END_DATE', 'en', 'End Date');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_END_DATE', 'it', 'Data Fine');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_LIST_SURVEY', 'en', 'List of Survey');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_LIST_SURVEY', 'it', 'Lista dei Sondaggi');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_COMPILE', 'en', 'Fill it');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_COMPILE', 'it', 'Compilalo');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_NUMBER_MIN_ANSWERS', 'en', 'Choose between a minimum number of responses equal to');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_NUMBER_MIN_ANSWERS', 'it', 'Scegli tra un numero minimo di risposte pari a ');
+
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_NUMBER_MAX_ANSWERS', 'en', 'and a maximum equal to');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_NUMBER_MAX_ANSWERS', 'it', 'e un massimo pari a');
