@@ -1,4 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
@@ -29,10 +30,11 @@
             <td><s:property value="%{totalVoters}" /></td>
         </tr>
     </table>
-    <s:iterator var="question" value="survey.questions" status="questionIndex">
+    
+<s:iterator var="question" value="survey.questions" status="questions">
         <div class="subsection-light">
             <s:set name="occurrences" value="%{getQuestionStatistics(#question.id)}" />
-            <h2><s:text name="jpsurvey_question"/>&#32;<s:property value="#questionIndex.index + 1"/>. <s:property value="%{getLabel(#question.questions)}" /></h2>
+            <h2><s:text name="jpsurvey_question"/>&#32;<s:property value="#questions.index + 1"/>. <s:property value="%{getLabel(#question.questions)}" /></h2>
             <h3><s:text name="jpsurvey_answers" />:</h3>
             <ol>	
                 <s:iterator id="choice" value="#question.choices" status="rowstatus" >
@@ -69,18 +71,18 @@
                         <s:if test="#occurrence && (#roundedPercentage > 20)">
                             <dd>
                                 <span class="p<s:text name="format.roundedPercentage"><s:param name="value" value="#roundedPercentage"/></s:text>">
-                                    <span class="noscreen"><s:text name="jpsurvey.answer.number" /></span>&#32;<em class="leftEm"><s:property value="#rowstatus.index + 1"/></em>&#32;<span class="noscreen"><s:text name="jpsurvey.obtained" /></span>&#32;<em class="rightEm"><s:property value="#occurrence" />&#32;<s:text name="jpsurvey.votes" /></em></span>
+                                <em class="leftEm"><s:property value="#rowstatus.index + 1"/></em>&#32;<span class="noscreen"></span>&#32;<em class="rightEm"><s:property value="#occurrence" />&#32;<s:text name="jpsurvey.votes" /></em></span>
                             </dd>
                         </s:if>
                         <s:elseif test="#occurrence && (#roundedPercentage < 20)">
                             <dd>
                                 <span class="p<s:text name="format.roundedPercentage"><s:param name="value" value="#roundedPercentage"/></s:text>">
-                                    <span class="noscreen"><s:text name="jpsurvey.answer.number" /></span>&#32;<em class="leftEm"><s:property value="#rowstatus.index + 1"/></em>&#32;<span class="noscreen"><s:text name="jpsurvey.obtained" /></span></span>&#32;<em class="rightEmZero"><s:property value="#occurrence" />&#32;<s:text name="jpsurvey.votes" /></em>
+                                <em class="leftEm"><s:property value="#rowstatus.index + 1"/></em>&#32;<span class="noscreen"></span>&#32;<em class="rightEmZero"><s:property value="#occurrence" />&#32;<s:text name="jpsurvey.votes" /></em></span>
                             </dd>
                         </s:elseif>
                         <s:else>
                             <dd>
-                                <span class="p0"><span class="noscreen"><s:text name="jpsurvey.answer.number" /></span>&#32;<em class="leftEm"><s:property value="#rowstatus.index + 1"/></em></span>&#32;<span class="noscreen"><s:text name="jpsurvey.obtained" /></span>&#32;<em class="rightEmZero">0 &#32;<s:text name="jpsurvey.votes" /></em>
+                                <span class="p0"><span class="noscreen"></span>&#32;<em class="leftEm"><s:property value="#rowstatus.index + 1"/></em></span>&#32;<span class="noscreen"></span>&#32;<em class="rightEmZero">0 &#32;<s:text name="jpsurvey.votes" /></em>
                             </dd>
                         </s:else>
                     </s:iterator>
@@ -88,4 +90,7 @@
             </div>
         </div>
     </s:iterator>
-</div>
+        
+      
+        
+ 

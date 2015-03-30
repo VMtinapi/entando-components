@@ -2,6 +2,7 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
+
 <h1 class="panel panel-default title-page">
     <span class="panel-body display-block">
         <s:if test="question.questionnaire">
@@ -95,17 +96,24 @@
                 </div>
             </div>
         </div>
+        
+        
 
     <s:if test="%{strutsAction == 2}">
         <div class="form-group">
+            <fieldset class="col-xs-12"> 
+                
+            <legend><s:text name="jpsurvey_choice_configuration" /></legend>
             <label for="singleChoice"><s:text name="jpsurvey_singleChoice" /></label>
             <select name="singleChoice" id="singleChoice" tabindex="<wpsa:counter />" class="form-control">
                 <option value="1" <s:if test="%{singleChoice == null || singleChoice > 0}">selected="selected"</s:if> ><s:text name="jpsurvey_isSingleChoice" /></option>
                 <option value="0" <s:if test="%{singleChoice == 0}">selected="selected"</s:if> ><s:text name="jpsurvey_notSingleChoice" /></option>
-                </select>
+            </select>
+            </fieldset>
             </div>
 
             <fieldset class="col-xs-12"> 
+                
                 <legend><s:text name="jpsurvey_multipleChoice_configuration" /></legend>
             <div class="form-group">
                 <label for="minResponseNumber"><s:text name="jpsurvey_minResponseNumber" /></label>
@@ -116,7 +124,9 @@
                 <wpsf:textfield name="maxResponseNumber" id="maxResponseNumber" cssClass="form-control" />
             </div>
         </fieldset>
-
+         
+        <fieldset class="col-xs-12">       
+        <legend><s:text name="jpsurvey_choice_new" /></legend>
         <s:if test="question.choices.isEmpty"> 
             <div class="alert alert-info"><s:text name="jpsurvey.noAnswers" /></div>
         </s:if>
@@ -188,20 +198,21 @@
                             </td>
                             <s:if test="%{#currentChoice.freeText== false}">
                                 <%-- possible answer column --%>
-                                <td>
+                              <td>  
                                     <!-- OTTIENE LA STRINGA LOCALIZZATA -->
                                     <%-- cancellare
                                     <s:set name="localizedString" value="#currentChoice.choices[currentLang.code]" />
                                     --%>
                                         <s:property value="%{getLabel(#currentChoice.choices)}"/>
-                                    </a>
-                                </td>
+                                        </a>
+                                    
+                               </td>
                             </s:if>
                             <s:else> 
                                 <%-- possible answer column --%>
                                 <td><s:text name="jpsurvey_freeText" /></td>
                             </s:else>
-
+                            
                             <%-- Number of occurrences colums --%>
                             <td class="text-right">
                                 <s:if test="%{#currentStat == '' || #currentStat==null}">
@@ -223,6 +234,7 @@
                 </table>
             </div>
         </s:else>
+        </fieldset>
     </s:if>
 
     <s:if test="%{questionId != null && questionId != ''}">
@@ -231,21 +243,27 @@
             <wpsa:actionParam action="addChoice" var="addChoiceAction">
                 <wpsa:actionSubParam name="overrideResponseNumberFieldsCheck" value="true"></wpsa:actionSubParam>
             </wpsa:actionParam>
-            <wpsf:submit type="button" action="%{#addChoiceAction}" cssClass="btn btn-default">
-                <span class="icon fa fa-plus-circle"></span>&#32;
+            <wpsf:submit type="button" action="%{#addChoiceAction}" cssClass="btn btn-info">
+                <span class="icon fa fa-plus-square"></span>&#32;
                 <s:text name="%{getText('jpsurvey_new_choice')}"/>
             </wpsf:submit>
             <s:if test="question.questionnaire">
                 <wpsa:actionParam action="addFreeText" var="addFreeTextAction">
                     <wpsa:actionSubParam name="overrideResponseNumberFieldsCheck" value="true"></wpsa:actionSubParam>
                 </wpsa:actionParam>
-                <wpsf:submit type="button" action="%{#addFreeTextAction}" value="%{getText('jpsurvey_new_freeText')}" cssClass="btn btn-default" />
+                <wpsf:submit type="button" action="%{#addFreeTextAction}" value="%{getText('jpsurvey_new_freeText')}" cssClass="btn btn-info" >
+                    <span class="icon fa fa-plus-square"></span>&#32;
+                    <s:text name="%{getText('jpsurvey_new_freeText')}"/>
+                </wpsf:submit>
             </s:if>
         </div>
         </div>
     </s:if>
     <div class="form-horizontal">
         <div class="form-group">
+            <div class="col-xs-12 col-sm-4 col-mxd-4 margin-small-vertical">
+                    
+            </div>
             <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
                 <wpsf:submit type="button" action="saveQuestion" cssClass="btn btn-primary btn-block">
                     <span class="icon fa fa-floppy-o"></span>&#32;

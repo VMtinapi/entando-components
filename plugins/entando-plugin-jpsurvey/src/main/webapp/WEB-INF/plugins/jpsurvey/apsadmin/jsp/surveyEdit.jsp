@@ -184,6 +184,8 @@
                                 </div>
                             </div>
                         </fieldset>
+                                
+                             
                     </div>
 
 
@@ -273,16 +275,27 @@
                     </s:iterator>
                 </div>
             </div>
+                      
+
         </div>
 
         <s:if test="%{strutsAction == 2}"> 
             <fieldset class="col-xs-12">
                 <legend><s:text name="jpsurvey_questions_list" /></legend>
                 <%-- INIZIO ITERAZIONE DOMANDE NELLA LINGUA CORRENTE --%>
+                 <s:if test="%{surveyId != null}">
+                    <div class="form-group">
+                        <wpsf:submit type="button" action="addQuestion" value="" cssClass="btn btn-info">
+                            <span class="con fa fa-plus-square"></span>
+                            <s:text name="%{getText('jpsurvey_new_questions')}"/>
+                        </wpsf:submit>
+                    </div>
+                </s:if>
                 <s:if test="survey.questions.isEmpty">
                     <div class="alert alert-info"><s:text name="jpsurvey.noQuestions" /></div>
                 </s:if>
-
+                
+                    
                 <s:else>
                     <table class="table table-bordered">
                         <tr>
@@ -344,28 +357,26 @@
                         </s:iterator>
                     </table>
                 </s:else>
-                <%-- FINE ITERAZIONE DOMANDE --%>
-                <s:if test="%{surveyId != null}">
-                    <div class="form-group">
-                        <wpsf:submit type="button" action="addQuestion" value="" cssClass="btn btn-default">
-                            <span class="icon fa fa-plus-circle"></span>
-                            <s:text name="%{getText('jpsurvey_new_questions')}"/>
-                        </wpsf:submit>
-                    </div>
-                </s:if>
+                
             </fieldset>
         </s:if>
 
         <div class="form-horizontal">
             <div class="form-group">
+                <div class="col-xs-12 col-sm-4 col-mxd-4 margin-small-vertical">
+                    
+                </div>
                 <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
-                    <s:if test="getStrutsAction() == 1">
-                        <wpsf:submit type="button" action="saveSurvey" cssClass="btn btn-default btn-block">
-                            <span class="icon fa fa-play-circle-o"></span>&#32;
-                            <s:text name="%{getText('label.continue')}"/>                            
+                    <s:if test="getStrutsAction() == 1">   
+                    
+                        <wpsf:submit type="button" action="saveSurvey" cssClass="btn btn-primary btn-block pull-center">
+                            <span class="icon fa fa-floppy-o"></span>&#32;
+                            <s:text name="%{getText('label.save')}"/>                            
                         </wpsf:submit>
+                    
                     </s:if>
                     <s:elseif test="getStrutsAction() == 2">
+                        
                         <wpsf:submit type="button" action="saveSurvey" cssClass="btn btn-primary btn-block">
                             <span class="icon fa fa-floppy-o"></span>&#32;
                             <s:text name="%{getText('label.save')}"/>
